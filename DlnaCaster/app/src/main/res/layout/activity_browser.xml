@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layoutDirection="ltr"
+        android:orientation="vertical">
+
+        <!-- شريط التبويبات بأسلوب كروم -->
+        <LinearLayout
+            android:id="@+id/tabStrip"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_tab_strip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp">
+
+            <!-- خروج سريع: ضغطة = إغلاق المتصفح والعودة لصفحة التحكم، ضغط مطوّل = خروج من التطبيق -->
+            <ImageButton
+                android:id="@+id/btnExitBrowser"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="@drawable/bg_icon_btn_flat"
+                android:contentDescription="خروج من المتصفح"
+                android:padding="8dp"
+                android:src="@drawable/ic_power"
+                app:tint="@color/danger" />
+
+            <HorizontalScrollView
+                android:id="@+id/tabScroll"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fillViewport="false"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/tabRow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom"
+                    android:orientation="horizontal"
+                    android:paddingTop="4dp" />
+            </HorizontalScrollView>
+
+            <ImageButton
+                android:id="@+id/btnNewTab"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="@drawable/bg_icon_btn_flat"
+                android:contentDescription="تبويب جديد"
+                android:src="@drawable/ic_plus"
+                app:tint="@color/text_primary" />
+        </LinearLayout>
+
+        <!-- شريط العنوان والتنقّل -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@color/surface"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_icon_btn_flat"
+                android:contentDescription="رجوع"
+                android:src="@drawable/ic_arrow_back"
+                app:tint="@color/text_primary" />
+
+            <ImageButton
+                android:id="@+id/btnForward"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_icon_btn_flat"
+                android:contentDescription="تقدم"
+                android:src="@drawable/ic_arrow_forward"
+                app:tint="@color/text_secondary" />
+
+            <EditText
+                android:id="@+id/urlBox"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_url_box"
+                android:gravity="center_vertical"
+                android:hint="ابحث أو أدخل رابطًا"
+                android:imeOptions="actionGo"
+                android:importantForAutofill="no"
+                android:inputType="textUri"
+                android:maxLines="1"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:selectAllOnFocus="true"
+                android:singleLine="true"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary"
+                android:textSize="14sp" />
+
+            <ImageButton
+                android:id="@+id/btnReload"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_icon_btn_flat"
+                android:contentDescription="تحديث"
+                android:src="@drawable/ic_refresh"
+                app:tint="@color/text_primary" />
+
+            <ImageButton
+                android:id="@+id/btnWebStar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_icon_btn_flat"
+                android:contentDescription="حفظ الصفحة"
+                android:src="@drawable/ic_star"
+                app:tint="@null" />
+
+            <ImageButton
+                android:id="@+id/btnMenu"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_icon_btn_flat"
+                android:contentDescription="القائمة"
+                android:src="@drawable/ic_menu"
+                app:tint="@color/text_primary" />
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/webProgress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:max="100"
+            android:progressTint="@color/accent2"
+            android:visibility="gone" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <FrameLayout
+                android:id="@+id/webHolder"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <!-- شاشة البداية: الصفحات المحفوظة -->
+            <ScrollView
+                android:id="@+id/startPage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bg"
+                android:fillViewport="true"
+                android:layoutDirection="rtl"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:id="@+id/startResume"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="14dp"
+                        android:background="@drawable/bg_resume_card"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="14dp"
+                        android:visibility="gone">
+
+                        <FrameLayout
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:background="@drawable/bg_chip_icon">
+
+                            <ImageView
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_history"
+                                app:tint="@color/accent2" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/startResumeTitle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:textColor="@color/text_primary"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/startResumeSub"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:textColor="@color/accent2"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
+                            android:src="@drawable/ic_play"
+                            app:tint="@color/accent2" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/startEmpty"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:lineSpacingExtra="4dp"
+                        android:text="لا توجد صفحات محفوظة بعد.\nاكتب رابطًا في الأعلى، وعند فتح صفحة اضغط ★ لتظهر هنا."
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp" />
+
+                    <GridLayout
+                        android:id="@+id/startGrid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:columnCount="3" />
+                </LinearLayout>
+            </ScrollView>
+
+            <com.mycast.dlna.GlowBorderView
+                android:id="@+id/startGlow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
+
+            <!-- زر البث العائم -->
+            <TextView
+                android:id="@+id/btnCastWeb"
+                android:layout_width="wrap_content"
+                android:layout_height="54dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_gradient_button"
+                android:clickable="true"
+                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/ic_cast"
+                android:drawableTint="#FFFFFF"
+                android:elevation="8dp"
+                android:focusable="true"
+                android:gravity="center"
+                android:layoutDirection="rtl"
+                android:paddingStart="26dp"
+                android:paddingEnd="26dp"
+                android:text="بث إلى التلفاز"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fullHolder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000000"
+        android:visibility="gone" />
+</FrameLayout>
